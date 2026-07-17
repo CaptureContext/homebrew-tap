@@ -1,0 +1,74 @@
+name: Update formula
+
+on:
+  workflow_dispatch:
+    inputs:
+      formula:
+        description: Registered formula name
+        required: true
+        type: string
+      version:
+        description: Stable release version without a v prefix
+        required: true
+        type: string
+  repository_dispatch:
+    types:
+      - formula-release
+
+permissions:
+  contents: write
+
+concurrency:
+  group: homebrew-tap-formula-updates
+  cancel-in-progress: false
+
+jobs:
+  update:
+    name: Update formula
+    runs-on: macos-26
+    steps:
+      - name: Check out tap
+        uses: actions/checkout@v6
+
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@1f8e202ffddf94def7f42f6fa3a482e821489f9c # 2026.07.10.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up git
+        uses: Homebrew/actions/git-user-config@1f8e202ffddf94def7f42f6fa3a482e821489f9c # 2026.07.10.1
+
+      - name: Update and verify formula
+        id: update
+        env:
+          FORMULA: ${{ inputs.formula || github.event.client_payload.formula }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ inputs.version || github.event.client_payload.version }}
+        run: |
+          set -euo pipefail
+          scripts/update-formula.sh "$FORMULA" "$VERSION"
+
+          if git diff --quiet -- "Formula/$FORMULA.rb"
+          then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push formula
+        if: steps.update.outputs.changed == 'true'
+        env:
+          FORMULA: ${{ inputs.formula || github.event.client_payload.formula }}
+          VERSION: ${{ inputs.version || github.event.client_payload.version }}
+        run: |
+          set -euo pipefail
+          git add -- "Formula/$FORMULA.rb"
+          git commit -m "$FORMULA $VERSION"
+          git push origin HEAD:main
+
+      - name: Report current formula
+        if: steps.update.outputs.changed == 'false'
+        env:
+          FORMULA: ${{ inputs.formula || github.event.client_payload.formula }}
+          VERSION: ${{ inputs.version || github.event.client_payload.version }}
+        run: echo "$FORMULA is already at $VERSION."
