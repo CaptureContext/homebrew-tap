@@ -16,6 +16,6 @@ class Fxcodex < Formula
   end
 
   test do
-    assert_equal version.to_s, shell_output("#{bin}/fxcodex version").strip
+    assert_equal version.to_s, shell_output("#{bin}/fxcodex --version").strip
   end
 end
