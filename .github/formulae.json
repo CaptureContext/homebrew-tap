@@ -2,5 +2,9 @@
   "fxcodex": {
     "asset": "fxcodex-universal-apple-darwin",
     "repository": "CaptureContext/fxcodex"
+  },
+  "skillrack": {
+    "asset": "skillrack-universal-apple-darwin",
+    "repository": "CaptureContext/skillrack"
   }
 }
