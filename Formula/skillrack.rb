@@ -1,8 +1,8 @@
 class Skillrack < Formula
   desc "Install, link, and inspect shared agent skills"
   homepage "https://github.com/CaptureContext/skillrack"
-  url "https://github.com/CaptureContext/skillrack/releases/download/0.1.0/skillrack-universal-apple-darwin"
-  sha256 "db87ec231b8754896d05a6cb88dee0da131a7f82f10c40a5c5a0558df239724d"
+  url "https://github.com/CaptureContext/skillrack/releases/download/0.1.1/skillrack-universal-apple-darwin"
+  sha256 "e942a0253e1e14724d48c4fe22ea178a9dc5b0cba08734bdb1a96a372cce1861"
   license "MIT"
 
   depends_on :macos
