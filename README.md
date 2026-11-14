@@ -41,3 +41,23 @@ brew install capturecontext/tap/fxcodex
 ```bash
 brew upgrade fxcodex
 ```
+
+## [fxclaude](https://github.com/capturecontext/fxclaude)
+
+A macOS CLI for managing isolated Claude desktop workspaces.
+
+### Requirements
+
+- macOS 14 or later
+
+### ⌘ Install
+
+```bash
+brew install capturecontext/tap/fxclaude
+```
+
+### ⌘ Update
+
+```bash
+brew upgrade fxclaude
+```

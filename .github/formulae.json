@@ -6,5 +6,9 @@
   "skillrack": {
     "asset": "skillrack-universal-apple-darwin",
     "repository": "CaptureContext/skillrack"
+  },
+  "fxclaude": {
+    "asset": "fxclaude-universal-apple-darwin",
+    "repository": "CaptureContext/fxclaude"
   }
 }
