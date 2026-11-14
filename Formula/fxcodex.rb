@@ -1,8 +1,8 @@
 class Fxcodex < Formula
   desc "Manage isolated Codex workspaces on macOS"
   homepage "https://github.com/CaptureContext/fxcodex"
-  url "https://github.com/CaptureContext/fxcodex/releases/download/0.3.0/fxcodex-universal-apple-darwin"
-  sha256 "4f5fbc34644e5f87748e34842f088de898cde94c9f63353b4ac8a912cf12b181"
+  url "https://github.com/CaptureContext/fxcodex/releases/download/0.3.1/fxcodex-universal-apple-darwin"
+  sha256 "a08841a0131376fb2788651250099ede318a90afa781178650c842e974829750"
   license "MIT"
 
   depends_on :macos
