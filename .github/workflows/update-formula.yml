@@ -27,8 +27,13 @@ jobs:
     name: Update formula
     runs-on: macos-26
     steps:
+      # Start from the latest main, not the commit the event fired on: a run queued behind
+      # another release's update would otherwise push onto a stale base and be rejected.
       - name: Check out tap
         uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
 
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@1f8e202ffddf94def7f42f6fa3a482e821489f9c # 2026.07.10.1
@@ -64,6 +69,7 @@ jobs:
           set -euo pipefail
           git add -- "Formula/$FORMULA.rb"
           git commit -m "$FORMULA $VERSION"
+          git pull --rebase origin main
           git push origin HEAD:main
 
       - name: Report current formula
